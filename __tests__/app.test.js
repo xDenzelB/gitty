@@ -83,6 +83,7 @@ describe('gitty routes', () => {
     .delete('/api/v1/github/sessions');
 
     expect(res.body).toEqual({ 
+      success: true,
       message: 'Successfully signed out',
     });
   });

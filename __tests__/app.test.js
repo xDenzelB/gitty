@@ -46,15 +46,11 @@ describe('gitty routes', () => {
 
     const res = await agent.get('/api/v1/posts');
 
-    expect(res.body).toEqual({
+    expect(res.body).toEqual([{
       user_id: expect.any(String),
       username: 'fake_github_user',
       avatar: expect.any(String),
       post:  'This app rocks!!',
-    })
-
-
-
-
-  })
+    }]);
+ });
 });

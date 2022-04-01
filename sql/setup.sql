@@ -14,5 +14,10 @@ CREATE TABLE posts (
     user_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     post TEXT NOT NULL,
     username TEXT NOT NULL,
-    avatar TEXT
-)
+    avatar TEXT 
+);
+
+INSERT INTO
+posts (post, username, avatar)
+VALUES
+('This app rocks!!', 'fake_github_user', 'https://www.placecage.com/gif/300/300');

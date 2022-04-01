@@ -54,13 +54,13 @@ describe('gitty routes', () => {
       avatar: expect.any(String),
       post:  'This app rocks!!',
     }]);
- });
+  });
 
- it('Should be able to create a post for authenticated users', async () => {
-   const agent = request.agent(app);
-   await agent
-   .get('/api/v1/github/login/callback?code=42')
-   .redirects(1);
+  it('Should be able to create a post for authenticated users', async () => {
+    const agent = request.agent(app);
+    await agent
+    .get('/api/v1/github/login/callback?code=42')
+    .redirects(1);
 
     const post = {
       user_id: expect.any(String),
@@ -72,4 +72,19 @@ describe('gitty routes', () => {
     .send(post);
     expect(res.body).toEqual(post);
   });
+
+  it('should be able to log out a user', async () => {
+    const agent = request.agent(app);
+    await agent
+    .get('/api/v1/github/login/callback?code=42')
+    .redirects(1);
+
+    const res = await agent
+    .delete('/api/v1/github/sessions');
+
+    expect(res.body).toEqual({ 
+      message: 'Successfully signed out',
+    });
+  });
+  
 });

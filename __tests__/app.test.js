@@ -21,7 +21,7 @@ describe('gitty routes', () => {
       /https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=http:\/\/localhost:7890\/api\/v1\/github\/login\/callback/i
     );
   });
-  it('should login and redirect users to /api/v1/github/dashboard', async () => {
+  it('should login and redirect users to /api/v1/github/posts', async () => {
     const req = await request
       .agent(app)
       .get('/api/v1/github/login/callback?code=42')
@@ -37,4 +37,24 @@ describe('gitty routes', () => {
     });
   });
 
+
+  it('should be able to get posts for authenticated users', async () => {
+    const agent = request.agent(app);
+    await agent
+    .get('/api/v1/github/login/callback?code=42')
+    .redirects(1);
+
+    const res = await agent.get('/api/v1/posts');
+
+    expect(res.body).toEqual({
+      user_id: expect.any(String),
+      username: 'fake_github_user',
+      avatar: expect.any(String),
+      post:  'This app rocks!!',
+    })
+
+
+
+
+  })
 });

@@ -62,20 +62,14 @@ describe('gitty routes', () => {
    .get('/api/v1/github/login/callback?code=42')
    .redirects(1);
 
-   const res = await agent.get('/api/v1/posts');
-
-   const post = await Post.insert({
-    user_id: expect.any(String),
-    username: 'fake_github_user',
-    avatar: expect.any(String),
-    post:  'What does the fox say?',
-   });
-
-   expect(res.body).toEqual([{ 
-    user_id: expect.any(String),
-    username: 'fake_github_user',
-    avatar: expect.any(String),
-    post:  'What does the fox say?',
-    }]);
- });
+    const post = {
+      user_id: expect.any(String),
+      username: 'fake_github_user',
+      avatar: expect.any(String),
+      post:  'What does the fox say?',
+    };
+    const res = await agent.post('/api/v1/posts')
+    .send(post);
+    expect(res.body).toEqual(post);
+  });
 });

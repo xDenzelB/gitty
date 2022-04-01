@@ -2,6 +2,8 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const { post } = require('../lib/app');
+const Post = require('../lib/models/Post');
 
 jest.mock('../lib/utils/github');
 
@@ -51,6 +53,29 @@ describe('gitty routes', () => {
       username: 'fake_github_user',
       avatar: expect.any(String),
       post:  'This app rocks!!',
+    }]);
+ });
+
+ it('Should be able to create a post for authenticated users', async () => {
+   const agent = request.agent(app);
+   await agent
+   .get('/api/v1/github/login/callback?code=42')
+   .redirects(1);
+
+   const res = await agent.get('/api/v1/posts');
+
+   const post = await Post.insert({
+    user_id: expect.any(String),
+    username: 'fake_github_user',
+    avatar: expect.any(String),
+    post:  'What does the fox say?',
+   });
+
+   expect(res.body).toEqual([{ 
+    user_id: expect.any(String),
+    username: 'fake_github_user',
+    avatar: expect.any(String),
+    post:  'What does the fox say?',
     }]);
  });
 });

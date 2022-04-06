@@ -50,7 +50,7 @@ describe('gitty routes', () => {
 
     expect(res.body).toEqual([{
       post_id: expect.any(String),
-      user_id: expect.any(String),
+      user_id: '1',
       avatar: expect.any(String),
       post:  'This app rocks!!',
     }]);
@@ -63,8 +63,8 @@ describe('gitty routes', () => {
     .redirects(1);
 
     const post = {
-      user_id: expect.any(String),
-      username: 'fake_github_user',
+      user_id: '1',
+      post_id: expect.any(String),
       avatar: expect.any(String),
       post:  'What does the fox say?',
     };

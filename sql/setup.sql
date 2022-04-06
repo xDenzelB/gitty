@@ -18,7 +18,7 @@ CREATE TABLE posts (
 );
 
 INSERT INTO
-github_profile (username, email, avatar)
+github_profile (user_id, email, avatar)
 VALUES 
 ('fake_github_user', 'not-real@example.com', 'https://www.placecage.com/gif/300/300');
 INSERT INTO

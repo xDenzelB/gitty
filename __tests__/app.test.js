@@ -46,11 +46,12 @@ describe('gitty routes', () => {
     .get('/api/v1/github/login/callback?code=42')
     .redirects(1);
 
-    const res = await agent.get('/api/v1/posts');
+    const res = await agent.get('/api/v1/posts/all');
 
+    
     expect(res.body).toEqual([{
-      user_id: expect.any(String),
-      username: 'fake_github_user',
+      post_id: expect.any(String),
+      user_id: '1',
       avatar: expect.any(String),
       post:  'This app rocks!!',
     }]);
@@ -63,12 +64,12 @@ describe('gitty routes', () => {
     .redirects(1);
 
     const post = {
-      user_id: expect.any(String),
-      username: 'fake_github_user',
+      user_id: '1',
+      post_id: expect.any(String),
       avatar: expect.any(String),
       post:  'What does the fox say?',
     };
-    const res = await agent.post('/api/v1/posts')
+    const res = await agent.post('/api/v1/posts/')
     .send(post);
     expect(res.body).toEqual(post);
   });

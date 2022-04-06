@@ -11,13 +11,17 @@ CREATE TABLE github_profile (
 ); 
 
 CREATE TABLE posts (
-    id BIGINT REFERENCES github_profile(id) ,
+    post_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     post VARCHAR (255) NOT NULL,
-    username TEXT NOT NULL,
+    user_id BIGINT REFERENCES github_profile(id),
     avatar TEXT 
 );
 
 INSERT INTO
-posts (post, username, avatar)
+github_profile (username, email, avatar)
+VALUES 
+('fake_github_user', 'not-real@example.com', 'https://www.placecage.com/gif/300/300');
+INSERT INTO
+posts (post, user_id, avatar)
 VALUES
-('This app rocks!!', 'fake_github_user', 'https://www.placecage.com/gif/300/300');
+('This app rocks!!', 1, 'https://www.placecage.com/gif/300/300');

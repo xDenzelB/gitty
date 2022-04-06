@@ -11,7 +11,7 @@ CREATE TABLE github_profile (
 ); 
 
 CREATE TABLE posts (
-    user_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id BIGINT REFERENCES github_profile(id) ,
     post VARCHAR (255) NOT NULL,
     username TEXT NOT NULL,
     avatar TEXT 
